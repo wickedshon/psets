@@ -1,5 +1,6 @@
 package com.wickedshon.leetcode.easy;
 
+import java.util.Arrays;
 import java.util.Comparator;
 
 /**
@@ -9,13 +10,11 @@ import java.util.Comparator;
  * status: incomplete
  */
 public class BinarySearch {
-   public static void main(String[] args) {
-      Integer[] nums = new Integer[]{-1, 0, 3, 5, 9, 12};
-      System.out.println(bs(nums, 9, true));
-   }
 
    public static <T extends Comparable<T>> int bs(T[] elements, T target,
                                                   boolean isIter) {
+      System.out.println("Given: " + Arrays.toString(elements));
+      System.out.println("Finding: " + target);
       if (isIter) {
          return iter(elements, target);
       }
@@ -23,14 +22,31 @@ public class BinarySearch {
    }
 
    private static <T extends Comparable<T>> int rec(T[] elements, T target) {
-      return 0;
+      return recHelper(elements, 0, elements.length - 1, target);
+   }
+
+   private static <T extends Comparable<T>> int recHelper(T[] elements,
+                                                          int start, int end,
+                                                          T target) {
+      if (start > end) {
+         return -1;
+      }
+      int mid = start + (end - start) / 2;
+      if (elements[mid].equals(target)) {
+         return mid;
+      } else if (elements[mid].compareTo(target) < 0) {
+         return recHelper(elements, mid + 1, end, target);
+      } else {
+         return recHelper(elements, start, mid - 1, target);
+      }
+
    }
 
 
    public static <T extends Comparable<T>> int iter(T[] elements, T target) {
       int start = 0, end = elements.length - 1;
       int mid;
-      while (start < end) {
+      while (start <= end) {
          mid = start + (end - start) / 2;
          T e = elements[mid];
          if (e.equals(target)) {

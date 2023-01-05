@@ -12,7 +12,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * author: wickedshon
@@ -39,13 +41,13 @@ public class BinarySearchTest {
       strings3 = new String[50];
       strings4 = new String[100];
 
-      numGenerator(iNums2, 10);
-      numGenerator(iNums3, 20);
-      numGenerator(iNums4, 30);
+      numArrayGenerator(iNums2, 10);
+      numArrayGenerator(iNums3, 20);
+      numArrayGenerator(iNums4, 30);
 
-      stringGenerator(strings2, 10);
-      stringGenerator(strings3, 20);
-      stringGenerator(strings4, 30);
+      stringArrayGenerator(strings2, 10);
+      stringArrayGenerator(strings3, 20);
+      stringArrayGenerator(strings4, 30);
 
       Arrays.sort(iNums2);
       Arrays.sort(iNums3);
@@ -56,49 +58,169 @@ public class BinarySearchTest {
       Arrays.sort(strings4);
    }
 
-   public static void numGenerator(Integer[] elements, int rangeSize) {
+   public static void numArrayGenerator(Integer[] elements, int rangeSize) {
+      Set<Integer> used = new HashSet<>();
       Random random = new Random();
       for (int i = 0; i < elements.length; i++) {
          int num = random.nextInt(-rangeSize, rangeSize);
+         while (!used.add(num)) {
+            num += 1;
+         }
          elements[i] = num;
       }
    }
 
-   public static void stringGenerator(String[] elements, int rangeSize) {
+   public static void stringArrayGenerator(String[] elements, int rangeSize) {
+      Set<Character> used = new HashSet<>();
       Random random = new Random();
       for (int i = 0; i < elements.length; i++) {
-         int num = random.nextInt(-rangeSize, rangeSize);
+         char num = (char) random.nextInt(rangeSize);
+         while (!used.add(num)) {
+            num += 1;
+         }
          elements[i] = WORD + num;
       }
    }
 
+
    public static int numGenerator(int limit) {
       Random random = new Random();
-      return random.nextInt(limit - 1);
+      return random.nextInt(0, limit);
    }
 
    @Test
-   void bsNum2() {
+   void bsIterNum1() {
+      int result = BinarySearch.bs(iNums1, 1, true);
+      Assertions.assertEquals(result, -1);
+   }
+
+   @Test
+   void bsIterNum2() {
       int expected = numGenerator(iNums2.length);
       int result = BinarySearch.bs(iNums2, iNums2[expected], true);
       Assertions.assertEquals(result, expected);
    }
 
    @Test
-   void bsNum3() {
-      int expected = numGenerator(iNums2.length);
-      int result = BinarySearch.bs(iNums2, iNums2[expected], true);
+   void bsIterNum3() {
+      int expected = numGenerator(iNums3.length);
+      int result = BinarySearch.bs(iNums3, iNums3[expected], true);
       Assertions.assertEquals(result, expected);
    }
 
    @Test
-   void bsNum4() {
-      int expected = numGenerator(iNums2.length);
-      int result = BinarySearch.bs(iNums2, iNums2[expected], true);
+   void bsIterNum4() {
+      int expected = numGenerator(iNums4.length);
+      int result = BinarySearch.bs(iNums4, iNums4[expected], true);
       Assertions.assertEquals(result, expected);
    }
 
    @Test
-   void iter() {
+   void bsIterNum5() {
+      int expected = numGenerator(iNums2.length);
+      int result = BinarySearch.bs(iNums2, -100, true);
+      Assertions.assertNotEquals(result, expected);
    }
+
+   @Test
+   void bsIterNum6() {
+      int expected = numGenerator(iNums2.length);
+      int result = BinarySearch.bs(iNums2, -100, true);
+      Assertions.assertEquals(result, -1);
+   }
+
+
+   @Test
+   void bsIterString1() {
+      int result = BinarySearch.bs(strings1, WORD, true);
+      Assertions.assertEquals(result, -1);
+   }
+
+   @Test
+   void bsIterString2() {
+      int expected = numGenerator(strings2.length);
+      int result = BinarySearch.bs(strings2, strings2[expected], true);
+      Assertions.assertEquals(result, expected);
+   }
+   @Test
+   void bsIterString3() {
+      int expected = numGenerator(strings2.length);
+      int result = BinarySearch.bs(strings2, "wordly", true);
+      Assertions.assertEquals(result, -1);
+   }
+   @Test
+   void bsIterString4() {
+      int expected = numGenerator(strings2.length);
+      int result = BinarySearch.bs(strings2, strings2[expected], true);
+      Assertions.assertNotEquals(result, -1);
+   }
+
+
+   @Test
+   void bsRecNum1() {
+      int result = BinarySearch.bs(iNums1, 1, false);
+      Assertions.assertEquals(result, -1);
+   }
+
+   @Test
+   void bsRecNum2() {
+      int expected = numGenerator(iNums2.length);
+      int result = BinarySearch.bs(iNums2, iNums2[expected], false);
+      Assertions.assertEquals(result, expected);
+   }
+
+   @Test
+   void bsRecNum3() {
+      int expected = numGenerator(iNums3.length);
+      int result = BinarySearch.bs(iNums3, iNums3[expected], false);
+      Assertions.assertEquals(result, expected);
+   }
+
+   @Test
+   void bsRecNum4() {
+      int expected = numGenerator(iNums4.length);
+      int result = BinarySearch.bs(iNums4, iNums4[expected], false);
+      Assertions.assertEquals(result, expected);
+   }
+
+   @Test
+   void bsRecNum5() {
+      int expected = numGenerator(iNums2.length);
+      int result = BinarySearch.bs(iNums2, -100, false);
+      Assertions.assertNotEquals(result, expected);
+   }
+
+   @Test
+   void bsRecNum6() {
+      int expected = numGenerator(iNums2.length);
+      int result = BinarySearch.bs(iNums2, -100, false);
+      Assertions.assertEquals(result, -1);
+   }
+
+
+   @Test
+   void bsRecString1() {
+      int result = BinarySearch.bs(strings1, WORD, false);
+      Assertions.assertEquals(result, -1);
+   }
+
+   @Test
+   void bsRecString2() {
+      int expected = numGenerator(strings2.length);
+      int result = BinarySearch.bs(strings2, strings2[expected], false);
+      Assertions.assertEquals(result, expected);
+   }
+   @Test
+   void bsRecString3() {
+      int expected = numGenerator(strings2.length);
+      int result = BinarySearch.bs(strings2, "wordly", false);
+      Assertions.assertEquals(result, -1);
+   }
+   @Test
+   void bsRecString4() {
+      int expected = numGenerator(strings2.length);
+      int result = BinarySearch.bs(strings2, strings2[expected], false);
+      Assertions.assertNotEquals(result, -1);
+   }
+
 }
