@@ -6,8 +6,10 @@ import java.util.Comparator;
 /**
  * author: wickedshon
  * date: 1/3/2023
- * description:
- * status: incomplete
+ * description: Generic binary search
+ * recursive: (Space: O(N=logN) for recursive stack; Time: O(logN))
+ * iterative: (Space: Constant; Time: O(logN))
+ * status: complete
  */
 public class BinarySearch {
 
