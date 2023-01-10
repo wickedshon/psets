@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * author: wickedshon
  * date: 1/8/2023
- * description:
+ * description: find the possible inputs from the int array to get the target
  * status: incomplete
  */
 public class TwoSum {
