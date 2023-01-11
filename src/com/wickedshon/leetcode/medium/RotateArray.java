@@ -1,4 +1,4 @@
-package com.wickedshon.leetcode.easy;
+package com.wickedshon.leetcode.medium;
 
 import java.util.Arrays;
 

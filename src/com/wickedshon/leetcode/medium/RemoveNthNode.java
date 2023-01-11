@@ -1,4 +1,6 @@
-package com.wickedshon.leetcode.easy;
+package com.wickedshon.leetcode.medium;
+
+import com.wickedshon.leetcode.easy.ListNode;
 
 /**
  * author: wickedshon
